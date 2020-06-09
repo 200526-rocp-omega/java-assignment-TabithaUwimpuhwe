@@ -495,18 +495,18 @@ public class EvaluationService {
 	 */
 	public int getScrabbleScore(String string) {
 		
-		
-		// Still Need to work this
-		
-		char[] Word = string.toCharArray();
+		string=string.toUpperCase();
+		char[] Word = string.toCharArray(); 
+
 		int score = 0;
 		
 		for( Character letter: Word) {
 			score += getValueOfEachLetter(letter);
+			System.out.println(score);
 		}
+		
 		return score;
 	}
-	
 		int getValueOfEachLetter(char letter){		
 		switch (letter) {
 		case 'A':
@@ -543,6 +543,7 @@ public class EvaluationService {
         case 'Z': return 10;
 
 		}
+		
 		 return letter;
 	}
 		
@@ -580,14 +581,21 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		
-		//Remain to do: check all for now	
-	
+			
 		String phoneNumber = "";
-	
-		phoneNumber = phoneNumber.replaceAll("\\s", "");//remove space
-
+		
+		phoneNumber = string.replaceAll("[^a-zA-Z0-9]", ""); //removes all special characters
+		
+		if (phoneNumber.length()>11 ) {
+			throw new IllegalArgumentException("primitives expected");
+		}
+		else if (!phoneNumber.matches("^[0-9]+$")){
+			throw new IllegalArgumentException("invalidWithNonNumeric");
+		}
+		else
+		{
 		return phoneNumber;
+		}
 	}
 
 	/**
@@ -647,12 +655,12 @@ public class EvaluationService {
 	            temp = temp/10; 
 	        } 
 	  
-	        // If satisfies Armstrong condition 
+	        // It satisfies Armstrong condition 
 	        return (sum == input); 
 		    
 		}
 		
-		// Calculate input raised to the power of y
+		// Let calculate input raised to the power of y
 		private int power(int input, int y) {
 			if( y == 0) 
 	            return 1; 
@@ -661,7 +669,7 @@ public class EvaluationService {
 	        return input*power(input, y/2)*power(input, y/2);
 		}
 		
-		//Calculate order of the number
+		//Lwr calculate order of the number
 		private int order(int input) {
 			 int n = 0; 
 		        while (input != 0) 
@@ -684,23 +692,30 @@ public class EvaluationService {
 		//Remain to do: work out the rest besides 1	
 		
 		List<Long> list=new ArrayList<Long>();
-		list.add(l);
+//		list.add(l);
 		
+		// number that 2n divide l eg 2
 		while (l%2==0) {
+			 list.add(2L);
 			 l /= 2;
 		}
-		
+		//number that divide l when l is odd eg 9
 		for (int i = 3; i <= Math.sqrt(l); i+= 2) 
         { 
             while (l%i == 0) 
-          
+            {
+            	list.add(i* 1L);
                 l /= i; 
+            }
             } 
+		// when l>2
+		if (l>2) {		
+			//list.add(i);
+			list.add(l);
         } 
- 
 		return list;
-
 	}
+		
 
 	/**
 	 * 18. Calculate Nth Prime
@@ -824,8 +839,7 @@ public class EvaluationService {
 	        answer = answer+ k;
 	       //  System.out.println(answer);
 	      }
-	      
-	     
+	        
 	      // 4 and 6
 	      //4, 6, 8, 12 added together (multiples of 4 and 6 not to exceed 15) 
 	      //15 is i
