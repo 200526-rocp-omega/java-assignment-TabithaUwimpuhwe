@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class EvaluationService {
 
@@ -67,6 +68,7 @@ public class EvaluationService {
 			}
 		}
 	}
+
 
 	/**
 	 * 2. MegaBytes and KiloBytes
@@ -300,7 +302,7 @@ public class EvaluationService {
 	 */
 	public int getGreatestCommonDivisor(int first, int second) {
 
-		int n; //the number of times  is found common in first and second if none of them is zero
+		int n; //the number of times  is found in first and second if none of them is zero
 	    for (n = 0; ((first | second) & 1) == 0; n++) {
 	        first >>= 1;
 	        second >>= 1;
@@ -308,8 +310,7 @@ public class EvaluationService {
 	    while ((first & 1) == 0) {
 	    	first >>= 1;
 	    }
-	 
-	    //
+	
 	    if ((first | second) >10 ) {
 	    do {
 	        while ((second & 1) == 0) {
@@ -324,7 +325,7 @@ public class EvaluationService {
 	   }
 	    while (second != 0);
 	    return first << n;
-	    }//
+	    }
 	    else {
 	    	return -1;
 	    }
@@ -609,21 +610,21 @@ public class EvaluationService {
 	public Map<String, Integer> wordCount(String string) {
 		
 		Map<String, Integer> expectedWordCount = new HashMap<>();
-	
-	String temp[] = string.split("\\,\\\n| |\\,");
 		
-		for (int j = 0; j < temp.length; j++) {   
-		
-		String word = temp[j];
-		
-		int count = 0;
-	      for (int i = 0; i < temp.length; i++) {
-	         if (word.equals(temp[i])) 
-	            count++;
-	         expectedWordCount.put(word, count);	
-	      }		
-		}
-		return expectedWordCount;
+		String temp[] = string.split("\\,\\\n| |\\,");
+			
+			for (int j = 0; j < temp.length; j++) {   
+			
+			String word = temp[j];
+			
+			int count = 0;
+		      for (int i = 0; i < temp.length; i++) {
+		         if (word.equals(temp[i])) 
+		            count++;
+		         expectedWordCount.put(word, count);	
+		      }		
+			}
+			return expectedWordCount;
 	}
 
 
@@ -669,7 +670,7 @@ public class EvaluationService {
 	        return input*power(input, y/2)*power(input, y/2);
 		}
 		
-		//Lwr calculate order of the number
+		//Let calculate order of the number
 		private int order(int input) {
 			 int n = 0; 
 		        while (input != 0) 
@@ -688,34 +689,26 @@ public class EvaluationService {
 	 * Note that 1 is not a prime number.
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-	
-		//Remain to do: work out the rest besides 1	
 		
 		List<Long> list=new ArrayList<Long>();
-//		list.add(l);
 		
-		// number that 2n divide l eg 2
 		while (l%2==0) {
 			 list.add(2L);
 			 l /= 2;
 		}
-		//number that divide l when l is odd eg 9
 		for (int i = 3; i <= Math.sqrt(l); i+= 2) 
-        { 
-            while (l%i == 0) 
-            {
+        	{ 
+            while (l%i == 0) {
             	list.add(i* 1L);
                 l /= i; 
-            }
+            	}
             } 
-		// when l>2
 		if (l>2) {		
-			//list.add(i);
 			list.add(l);
         } 
 		return list;
 	}
-		
+	
 
 	/**
 	 * 18. Calculate Nth Prime
@@ -728,25 +721,29 @@ public class EvaluationService {
 	 * If your language provides methods in the standard library to deal with prime
 	 * numbers, pretend they don't exist and implement them yourself.
 	 */
+
+		
 	public int calculateNthPrime(int k) {
 		
-		//Remain to do: catch illegal exception; only the last method does not work
-		int count=0;
-		
+	int count=0;
+	
 		if (k!=0) {
-		
-			for(int i=2; count<k; i++) {
-			
-				if(k%i==0) {
-				++count;
-				}
-			}
-			return count;
+			for(int i = 2, x = 2; count <= k; i++) {
+	            for(x = 2; x < count; x++) {
+	                if(i % x == 0) {
+	                    break;
+	                }
+	            }
+	            if(x == count) {
+	                return count;
+	            }
+	        }		
 		} else {
 			throw new IllegalArgumentException("n must be positive");
 		}
-	}
-		
+		return count;
+}
+	
 
 	/**
 	 * 19. Pangram
@@ -772,8 +769,7 @@ public class EvaluationService {
 			} else
 			{
 				frequencyMap.put(c,1);
-				//If this is the first time we spot this letter
-				//the count should be set to 1
+				//If this is the first time we spot this letter the count should be set to 1
 			}
 		}
 		
@@ -789,7 +785,7 @@ public class EvaluationService {
 	 * 20. Sum of Multiples 
 	 * 
 	 * Given a number, find the sum of all the unique multiples of particular
-	 * numbers up to but not including that number.
+	 * numberS up to but not including that number.
 	 * 
 	 * If we list all the natural numbers below 20 that are multiples of 3 or 5, we
 	 * get 3, 5, 6, 9, 10, 12, 15, and 18.
@@ -798,69 +794,17 @@ public class EvaluationService {
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
 
-		//needs to be done
-		int answer = 0;
-//		getSumOfMultiples =
-		int siz = set.length;
-		System.out.println(i);
-		System.out.println(siz);
-		for (int temp : set) {
-			System.out.println(temp);
-	//		hashSet.add(temp);
-		
-		}
-		//System.out.println(set);
-		Set<Integer> hashSet = new HashSet<Integer>();
-//		
-//		for (Integer m: hashSet) {
-//		       m=hashSet.iterator().next();
-//		}
-//		hashSet.add(temp);
-		
-//		for (Integer m: hashSet) {
-//	       m=hashSet.iterator().next();
-		while (hashSet.iterator().hasNext()) {
-	         System.out.println(hashSet.iterator().next());
-		}
-//		}	
-	
-
-		hashSet.add(6);
-		hashSet.add(8);
-		hashSet.add(12);
-//		
-
-	
-	      Integer[] array = new Integer[hashSet.size()];	      
-	      int j = 0;
-	      for (Integer k: hashSet) {
-	         array[j++] = k;
-	      //   System.out.println(k);
-	        answer = answer+ k;
-	       //  System.out.println(answer);
-	      }
-	        
-	      // 4 and 6
-	      //4, 6, 8, 12 added together (multiples of 4 and 6 not to exceed 15) 
-	      //15 is i
-	      //5, 10, 15, 20, 25, 30, 35,40,45, 50 = 275
-	//	int j = 0;
-	//      for (Integer n: hashSet) {
-	//         array[j++] = n;
-	 //     }  
-	    
-	    
-
-		
-//		int sum = i * multipleTimesOf20 (multipleTimesOfI + 1)/2;
-		
-//		int answer = i* sum;
-		
-		
-		
-		return answer;
+	        Set<Integer> multiplesOfNumbers = new HashSet<Integer>();
+	        for (int j : set) {
+	            Stream.iterate(0, x -> x + 1).limit((i)).
+	            filter(x -> x % j == 0).forEach(x -> multiplesOfNumbers.add(x));
+	        }
+	        int sum = 0;
+	        for (int m : multiplesOfNumbers) {
+	            sum += m;
+	        }
+	        return sum;
 	}
-	
 	/**
 	 * 21. Three Magic Numbers
 	 * 
@@ -908,10 +852,3 @@ public class EvaluationService {
 		return random;
 	}
 }
-
-/*
- * Concatenate world countries
- 
-FROM world
-WHERE capital = concat(name, ' City');
-*/
