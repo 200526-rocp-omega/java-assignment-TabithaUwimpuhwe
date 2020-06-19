@@ -344,21 +344,26 @@ public class EvaluationService {
 	 * If the number is negative then the method needs to return -1 to indicate an
 	 * invalid value.
 	 */
-	public int sumFirstAndLastDigit(int num) throws NumberFormatException{			
-	//		int firstDigit  = Integer.parseInt(Integer.toString(num).substring(0, 1)); find 1 digit in a number
-				
-			int lastDigit = num % 10;		
+	public int sumFirstAndLastDigit(int num) throws NumberFormatException {
+
+			// Find the last digit
+			int lastDigit = num % 10;
+	
+			// Find the first digit looping through num;
 			int x = num;
-			while(x >= 10){
-				   x = num / 10;
-				}
-				int firstDigit = x ;
-			
-			if(num >=0) {		
-				return firstDigit + lastDigit;
+			while (x >= 10) {
+				x = x / 10;
 			}
-				else {
-				return -1;
+			int firstDigit = x;
+	
+			// Find sum of first and last digit
+			int sum = firstDigit + lastDigit;
+	
+			if (num >= 0) {
+				return sum;
+			} 
+			else {
+			return -1;
 			}
 		}
 	/**
@@ -503,7 +508,6 @@ public class EvaluationService {
 		
 		for( Character letter: Word) {
 			score += getValueOfEachLetter(letter);
-			System.out.println(score);
 		}
 		
 		return score;
@@ -549,7 +553,7 @@ public class EvaluationService {
 	}
 		
 	/**
-	 * 14. Clean the Phone Number
+	 * 14. Clean the Phone x
 	 * 
 	 * Clean up user-entered phone numbers so that they can be sent SMS messages.
 	 * 
